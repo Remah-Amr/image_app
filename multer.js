@@ -20,5 +20,13 @@ const fileFilter = (req,file,cb) =>{
     }
 }
 
-module.exports = multer({storage: fileStorage,fileFilter:fileFilter}).any()
+const videoStorage = multer.diskStorage({
+    destination: 'videos',
+    filename : (req,file,cb) => {
+        cb(null,file.originalname)
+    }
+})
 
+exports.multerConfigImage = multer({storage: fileStorage,fileFilter:fileFilter}).any()
+
+exports.multerConfigVideo = multer({storage: videoStorage}).any()

@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const imageModel = require('./models/Image')
-const multerConfig = require('./multer')
+const {multerConfigImage, multerConfigVideo} = require('./multer')
 const cloud = require('./cloudinaryConfig')
 const fs = require('fs')
 
@@ -18,7 +18,7 @@ mongoose.connect("mongodb+srv://remah:remah654312@cluster0-ytypa.mongodb.net/tes
 app.use('/images',express.static('images'))
 
 
-app.post('/myImages',multerConfig , async (req,res)=>{
+app.post('/myImages',multerConfigImage , async (req,res)=>{
 
     const result = await cloud.uploads(req.files[0].path)
 
@@ -41,6 +41,31 @@ app.post('/myImages',multerConfig , async (req,res)=>{
 app.get('/myImages',async (req,res)=>{
     const images = await imageModel.find()
     res.json(images)
+})
+
+app.post('/myVideos', multerConfigVideo ,async (req,res) => {
+    try {
+        const result = await cloud.uploadVideoLarge(req.files[0].path)
+        fs.unlinkSync(req.files[0].path)
+        res.json({result})
+
+    } catch(err) {
+        res.json({
+            err
+        })
+    }
+})
+
+app.post('/DelmyVideos',async (req,res) => {
+    try {
+        const result = await cloud.destroyVideo('zqs8kisg5vhytm8bgts4')
+        res.json({result})
+
+    } catch(err) {
+        res.json({
+            err
+        })
+    }
 })
 
 app.listen(8080,()=>{
