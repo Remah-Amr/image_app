@@ -1,41 +1,42 @@
 const cloudinary = require('cloudinary')
+require('dotenv').config()
 
 cloudinary.config({
-    cloud_name : 'dqfrk92mp',
-    api_key : '253596391863857',
-    api_secret: 'zUSdqm663H7lfMKqdirIGZxu318'
+    cloud_name: process.env.cloud_name,
+    api_key: process.env.api_key,
+    api_secret: process.env.api_secret
 })
 
-exports.uploads = (file) =>{
+exports.uploads = (file) => {
     return new Promise(resolve => {
-    cloudinary.uploader.upload(file, (result) =>{
-    resolve({url: result.url, id: result.public_id})
-    }, {resource_type: "auto"})
+        cloudinary.uploader.upload(file, (result) => {
+            resolve({ url: result.url, id: result.public_id })
+        }, { resource_type: "auto" })
     })
 }
 
-exports.uploadVideo = (file) =>{
+exports.uploadVideo = (file) => {
     return new Promise(resolve => {
-    cloudinary.uploader.upload(file, (result) =>{
-    resolve({url: result.url, id: result.public_id})
-    }, {resource_type: "video"})
+        cloudinary.uploader.upload(file, (result) => {
+            resolve({ url: result.url, id: result.public_id })
+        }, { resource_type: "video" })
     })
 }
 
-exports.uploadVideoLarge = (file) =>{
+exports.uploadVideoLarge = (file) => {
     return new Promise(resolve => {
-    cloudinary.uploader.upload(file, (result) =>{
-    resolve({url: result.url, id: result.public_id})
-    }, {resource_type: "video",chunk_size: 5000000})
+        cloudinary.uploader.upload(file, (result) => {
+            resolve({ url: result.url, id: result.public_id })
+        }, { resource_type: "video", chunk_size: 5000000 })
     })
 }
 
 exports.destroyVideo = (id) => {
     return new Promise(resolve => {
-        cloudinary.uploader.destroy(id, (result) =>{
-        resolve(result)
-        }, {resource_type: "video"})
-        })
+        cloudinary.uploader.destroy(id, (result) => {
+            resolve(result)
+        }, { resource_type: "video" })
+    })
 }
 
 // https://cloudinary.com/documentation/image_upload_api_reference#upload_method

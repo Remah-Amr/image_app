@@ -4,11 +4,12 @@ const imageModel = require('./models/Image')
 const {multerConfigImage, multerConfigVideo} = require('./multer')
 const cloud = require('./cloudinaryConfig')
 const fs = require('fs')
+require('dotenv').config()
 
 // fire app new express app
 const app = express()
 
-mongoose.connect("mongodb+srv://remah:remah654312@cluster0-ytypa.mongodb.net/test?retryWrites=true&w=majority",{
+mongoose.connect(process.env.DB,{
     useNewUrlParser:true ,useUnifiedTopology: true
 }).then(()=>{
     console.log('mongodb connected')
