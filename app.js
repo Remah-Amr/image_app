@@ -8,7 +8,7 @@ const fs = require('fs')
 // fire app new express app
 const app = express()
 
-mongoose.connect("mongodb+srv://remah:remah654312@cluster0-ytypa.mongodb.net/test?retryWrites=true&w=majority",{
+mongoose.connect("",{
     useNewUrlParser:true ,useUnifiedTopology: true
 }).then(()=>{
     console.log('mongodb connected')
